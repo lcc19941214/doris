@@ -1,0 +1,16 @@
+{
+  "name": "doris",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "conan <lcc19941214@gmail.com> (https://github.com/lcc19941214/)",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^4.2.0",
+    "webpack-cli": "^2.0.12"
+  }
+}
