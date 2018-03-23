@@ -25,8 +25,8 @@ function parseResponse(xhr, options) {
 
   return {
     status,
-    body
-    // raw: xhr
+    body,
+    raw: xhr
   };
 }
 
@@ -35,9 +35,11 @@ function parseResponse(xhr, options) {
  * @param {XMLHttpRequest} xhr
  * @param {string} method
  * @param {*} options
+ * @param {*} internalOptions
  */
-function applyOptions(xhr, method, options) {
+function applyOptions(xhr, method, options, internalOptions) {
   const { withCredentials, responseType, timeout, onTimeout } = options;
+  const { urlencoded } = internalOptions;
 
   // set withCredentials
   if (isBool(withCredentials)) {
@@ -45,11 +47,11 @@ function applyOptions(xhr, method, options) {
   }
 
   // set responseType
-  xhr.responseType = responseType || RESPONSE_TYPE_JSON;
+  xhr.responseType = isUndef(responseType) ? RESPONSE_TYPE_JSON : responseType;
 
   // set headers
   let headers = options.headers || {};
-  if (method === POST) {
+  if (method === POST && urlencoded) {
     headers = {
       'Content-Type': 'application/x-www-form-urlencoded',
       ...headers
@@ -101,6 +103,7 @@ function createRequest(config) {
   let $method = method.toUpperCase();
   let $url = url;
   let body = null;
+  const internalOptions = {};
 
   switch ($method) {
     case POST:
@@ -108,6 +111,7 @@ function createRequest(config) {
         body = data;
       } else if (isObject(data)) {
         body = query.stringify(data);
+        internalOptions.urlencoded = true;
       }
       break;
     case GET:
@@ -124,7 +128,7 @@ function createRequest(config) {
    * when using `setRequestHeader`, state of xhr must be OPENED
    */
   xhr.open($method, $url, true);
-  applyOptions(xhr, $method, options);
+  applyOptions(xhr, $method, options, internalOptions);
 
   return new Promise((resolve, reject) => {
     xhr.onreadystatechange = handleReadyStateChange(xhr, options, resolve, reject);
@@ -134,7 +138,7 @@ function createRequest(config) {
 
 function createAlias(method) {
   return function createRequestWithAlias(url, data, options) {
-    return createRequest({ method, url, data, options });
+    return createRequest({ ...options, method, url, data });
   };
 }
 
