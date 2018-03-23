@@ -2,11 +2,19 @@
 
 > Promise based XMLHttpRequest lib for the browser
 
+## install
+
+```bash
+$ npm i --save-dev doris-request
+```
+
+## Usage
+
 ```js
-import doris from 'doris';
+import doris from 'doris-request';
 
 doris
-  .get('http://achuan.me', { hello: 'world' })
+  .get('http://achuan.me', { hello: 'world' }) // http://achuan.me?hello=world
   .then(res => {
     const { body, status } = res;
     console.log(status); // 200
@@ -23,5 +31,5 @@ doris
     const { body, status } = res;
     console.log(status); // 200
   })
-  .catch(console.err);
+  .catch(console.err); // status 405
 ```
