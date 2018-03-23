@@ -6,11 +6,11 @@ export const POST = 'POST';
 // ready state
 export const STATE_INIT = 0;
 
-export const STATE_connect = 1;
+export const STATE_CONNECT = 1;
 
-export const STATE_accept = 2;
+export const STATE_ACCEPT = 2;
 
-export const STATE_handling = 3;
+export const STATE_HANDLING = 3;
 
 export const STATE_DONE = 4;
 
