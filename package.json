@@ -10,6 +10,7 @@
   "author": "conan <lcc19941214@gmail.com> (https://github.com/lcc19941214/)",
   "license": "ISC",
   "devDependencies": {
+    "eslint": "^4.19.1",
     "webpack": "^4.2.0",
     "webpack-cli": "^2.0.12"
   }

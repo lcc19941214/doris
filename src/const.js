@@ -3,6 +3,14 @@ export const GET = 'GET';
 
 export const POST = 'POST';
 
+// method enctype
+
+export const POST_ENCODE_URLENCODE = 'application/x-www-form-urlencoded';
+
+export const POST_ENCODE_TEXT = 'text/plain';
+
+export const POST_ENCODE_FORMDATA = 'multipart/form-data';
+
 // ready state
 export const STATE_INIT = 0;
 
