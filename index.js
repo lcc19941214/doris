@@ -25,7 +25,7 @@ function parseResponse(xhr, options) {
 
   return {
     status,
-    body,
+    body
     // raw: xhr
   };
 }
@@ -48,11 +48,12 @@ function applyOptions(xhr, method, options) {
   xhr.responseType = responseType || RESPONSE_TYPE_JSON;
 
   // set headers
-  const headers = options.headers || {};
+  let headers = options.headers || {};
   if (method === POST) {
-    Object.assign(headers, {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
+    headers = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      ...headers
+    };
   }
   Object.keys(headers).forEach(header => {
     xhr.setRequestHeader(header, headers[header]);
