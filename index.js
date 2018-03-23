@@ -38,7 +38,7 @@ function parseResponse(xhr, options) {
  * @param {*} internalOptions
  */
 function applyOptions(xhr, method, options, internalOptions) {
-  const { withCredentials, responseType, timeout, onTimeout } = options;
+  const { withCredentials, responseType, timeout } = options;
   const { urlencoded } = internalOptions;
 
   // set withCredentials
@@ -66,10 +66,12 @@ function applyOptions(xhr, method, options, internalOptions) {
     xhr.timeout = timeout;
   }
 
-  // set onTimeout
-  if (isFunc(onTimeout)) {
-    xhr.onTimeout = onTimeout;
-  }
+  // bind handlers
+  Object.keys(options).forEach(handler => {
+    if (/^on[a-z]+$/.test(handler) && isFunc(options[handler])) {
+      xhr.addEventListener(handler.slice(2), options[handler]);
+    }
+  });
 }
 
 /**
